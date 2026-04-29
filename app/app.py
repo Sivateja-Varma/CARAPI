@@ -129,7 +129,7 @@ async def CreateCar(session:SessionDep,brand:str=Form(...),name:str=Form(...),im
       car=Car(
          brand=brand,
          name=name,
-         image_url=f"http://127.0.0.1:8000/{image_url}"
+         image_url=f"{os.getenv("ENTIRE_URL")}{image_url}"
       )
       session.add(car)
       session.commit()
@@ -165,7 +165,7 @@ async def DeleteCar(session:SessionDep,id:int,user=Depends(Allowed([Roles.Admin]
          print(IMAGE_URL)
          try:
             print("I am here")
-            IMAGE_URL=IMAGE_URL.replace("http://127.0.0.1:8000/","")
+            IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
             print(IMAGE_URL)
             print("I am here 2")
             if os.path.exists(IMAGE_URL):

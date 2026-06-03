@@ -17,7 +17,7 @@ class User(SQLModel,table=True):
   roles : Roles =Field(default=Roles.Normie)
 
 class  UserPost(SQLModel):
-  name: str =Field(max_length=100)
+  name: str =Field(min_length=2,max_length=100)
   password: str 
 
 class Car(SQLModel,table=True):
@@ -27,8 +27,8 @@ class Car(SQLModel,table=True):
   image_url:str | None = Field(default=None)
 
 class CarPost(SQLModel):
-  brand:str|None = Field(max_length=150)
-  name:str = Field(max_length=150,unique=True) 
+  brand:str|None = Field(max_length=150,min_length=2)
+  name:str = Field(max_length=150,unique=True,min_length=2) 
 
 sql_url=os.getenv("DATABASE_URL",
                   "postgresql+psycopg://postgres:@localhost:5432/fasttoy")

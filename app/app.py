@@ -9,19 +9,34 @@ from jose import jwt,JWTError,JWSError
 from typing import TypeVar,Generic,List
 from pydantic import BaseModel
 from .db import User,UserPost,Roles
-from fastapi import Form,UploadFile,File
+from fastapi import Form,UploadFile,File,Request
 import os 
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 load_dotenv()
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+import logging 
+
+logging.basicConfig(filename="badreq.log",filemode="w")
 
 
 
 app=FastAPI()
 app.mount("/uploads",StaticFiles(directory="uploads"),name="uploads")
 
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 hashing=CryptContext(schemes=['bcrypt'],deprecated="auto")
@@ -83,7 +98,7 @@ async def Register(session:SessionDep,user:UserPost):
   except Exception as e:  
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail=str(e)) 
   
-@app.post("/Login",status_code=status.HTTP_202_ACCEPTED)
+@app.post("/login",status_code=status.HTTP_202_ACCEPTED)
 async def Login(session:SessionDep,user:UserPost):
    statement=select(User).where(User.name==user.name)
    chap=  session.exec(statement).first()
@@ -119,9 +134,10 @@ async def singleCar(session:SessionDep,id:int):
 @app.post("/createCar",status_code=status.HTTP_201_CREATED)
 async def CreateCar(session:SessionDep,brand:str=Form(...),name:str=Form(...),image:UploadFile=File(None)):
    try:
+      print(Request.method)
       image_url=None
       if image:
-         file_path=f"{UPLOAD_DIR}/{image.filename}"
+         file_path = os.path.join(UPLOAD_DIR, image.filename)
          with open(file_path,'wb') as f:
             f.write( await image.read())
          image_url=file_path   
@@ -129,7 +145,7 @@ async def CreateCar(session:SessionDep,brand:str=Form(...),name:str=Form(...),im
       car=Car(
          brand=brand,
          name=name,
-         image_url=f"{os.getenv("ENTIRE_URL")}{image_url}"
+         image_url=f"{image_url}"
       )
       session.add(car)
       session.commit()
@@ -142,17 +158,22 @@ async def CreateCar(session:SessionDep,brand:str=Form(...),name:str=Form(...),im
 async def UpdateCar(session:SessionDep,carData:CarPost,id:int):
   try:
     car = session.get(Car,id)
+    if car:
+      car.brand=carData.brand
+      car.name=carData.name
+      try:
+         session.add(car)
+         session.commit()
+         session.refresh(car)
+         return car
+      except Exception as e:
+         logging.error(str(e))
+         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="bad request")
+
   except Exception as e:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=str(e)) 
-  if car:
-    car.brand=carData.brand
-    car.name=carData.name
-    session.add(car)
-    session.commit()
-    session.refresh(car)
-    return car
-  raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
+   
 @app.delete("/DeleteCar/{id}",status_code=status.HTTP_204_NO_CONTENT)
 async def DeleteCar(session:SessionDep,id:int,user=Depends(Allowed([Roles.Admin]))):
    try:
@@ -165,7 +186,7 @@ async def DeleteCar(session:SessionDep,id:int,user=Depends(Allowed([Roles.Admin]
          print(IMAGE_URL)
          try:
             print("I am here")
-            IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
+            # IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
             print(IMAGE_URL)
             print("I am here 2")
             if os.path.exists(IMAGE_URL):

@@ -1,18 +1,3 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-.env
-
-test.db
-Mainstore.db
-
 # Logs
 logs
 *.log
@@ -37,11 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-frontend/ecart/node_modules
-frontend/ecart/dist
-# Vite cache
-.vite/
-**/node_modules/
-
-# Media uploads
-uploads/

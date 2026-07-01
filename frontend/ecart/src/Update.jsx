@@ -5,6 +5,7 @@ import toast, {Toaster} from 'react-hot-toast'
 export default function UpdateForm() {
   let param = useParams()
   const [car,setCar]=useState({brand:"",name:""})
+  const [filecont,setFilecont]=useState(null)
   const navigate = useNavigate()
   // const [data,setData] = useState(null) 
   // console.log(data)
@@ -12,14 +13,17 @@ export default function UpdateForm() {
   async function finup(event){
       event.preventDefault();
       // setData(prev=>({...prev,car}))
-      console.log(car)
+      const formData = new FormData()
+      formData.append('brand', car.brand);
+      formData.append('name', car.name);
+    if (filecont) {
+      formData.append('upload', filecont);
+    }
       try{
         const response = await fetch(`/api/updateCar/${param.id}`,{
           method:"PUT",
-          headers : {
-            "Content-Type":"application/json",
-          },
-          body:JSON.stringify(car)
+
+          body:formData
         })
 
         if (response.ok){
@@ -75,6 +79,17 @@ export default function UpdateForm() {
       value={car.name}
       id="name"
     />
+  </div>
+  <div className="mb-3">
+    <label htmlFor="file" className="form-label">
+      File
+    </label>
+    <input
+      type="file"
+      className="form-control"
+      
+      onChange={(event)=>{setFilecont(event.target.files[0])}}
+      id="file" />
   </div>
   <button type="submit" className="btn btn-primary"
   onClick={finup}

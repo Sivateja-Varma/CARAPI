@@ -9,6 +9,7 @@ import HomePage from "./Home";
 import LoginUser from "./Login";
 import ItemView from "./itemView";
 import RegisterUser from "./registration";
+import Documentation from "./Documentation";
 
 function App() {
   const [token,setToken]=useState("")
@@ -43,6 +44,7 @@ function App() {
         <Route path="/update/:id" element={<UpdateForm />} />
         <Route path="/login" element={<LoginUser />} />
         <Route path="/register" element={<RegisterUser/>}></Route>
+        <Route path="/docs" element={<Documentation />} />
       </Routes>
     </GlobalItems.Provider>
     </Security.Provider>

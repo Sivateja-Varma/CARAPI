@@ -17,6 +17,8 @@ export default function HomePage() {
               Add Car
             </NavLink>
 
+            <NavLink to="http://32.236.44.143:8000/redoc" className="btn btn-outline-light px-4">API Docs</NavLink>
+
             {token?<button className="btn btn-danger"
             onClick={()=>{setToken("")
               localStorage.removeItem("token")
@@ -24,6 +26,7 @@ export default function HomePage() {
             :<NavLink to="/login" className="btn btn-warning px-4 fw-semibold">
               Login
             </NavLink>}
+            
           </div>
         </div>
       </nav>

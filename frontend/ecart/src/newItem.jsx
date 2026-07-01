@@ -21,7 +21,7 @@ export default function ItemView() {
          Update
         </NavLink>
         <button className="btn btn-danger" onClick={ async ()=>{
-      const response = await fetch(`http://127.0.0.1:8000/DeleteCar/${item.id}`,{
+      const response = await fetch(`/api/DeleteCar/${item.id}`,{
         method:"DELETE",
         headers:{
           'Authorization':"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzc5NDY1MDM5fQ.8ieNjsOMkdI4UZq0X9eFOmi65Odx4w0tzwgOGT5pzhM"

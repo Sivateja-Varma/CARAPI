@@ -1,0 +1,438 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Inter,Arial,sans-serif;
+}
+
+/* =======================
+    Main Layout
+======================= */
+
+.documentation{
+
+    display:flex;
+
+    min-height:100vh;
+
+    background:#0f172a;
+
+}
+
+
+/* =======================
+    Sidebar
+======================= */
+
+.sidebar{
+
+    width:250px;
+
+    background:#111827;
+
+    padding:35px 20px;
+
+    position:sticky;
+
+    top:0;
+
+    height:100vh;
+
+    border-right:1px solid #1f2937;
+
+}
+
+.sidebar h2{
+
+    color:#60a5fa;
+
+    margin-bottom:35px;
+
+    font-weight:700;
+
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:#cbd5e1;
+
+    text-decoration:none;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    margin-bottom:10px;
+
+    transition:.25s;
+
+}
+
+.sidebar a:hover{
+
+    background:#1e293b;
+
+    color:white;
+
+    transform:translateX(6px);
+
+}
+
+
+
+/* =======================
+        Content
+======================= */
+
+.content{
+
+    flex:1;
+
+    padding:50px;
+
+}
+
+.content h1{
+
+    font-size:45px;
+
+    margin-bottom:15px;
+
+}
+
+.content h2{
+
+    margin-bottom:18px;
+
+}
+
+.content p{
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+    margin-bottom:20px;
+
+}
+
+
+
+/* =======================
+        Cards
+======================= */
+
+.card{
+
+    background:#111827;
+
+    border:1px solid #1f2937;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    margin-top:35px;
+
+    margin-bottom:35px;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+
+}
+
+
+
+/* =======================
+      Endpoint Card
+======================= */
+
+.endpoint{
+
+    background:#111827;
+
+    border:1px solid #1f2937;
+
+    border-radius:15px;
+
+    padding:35px;
+
+    margin:45px 0;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.4);
+
+}
+
+.endpoint:hover{
+
+    transform:translateY(-3px);
+
+    transition:.25s;
+
+}
+
+
+
+/* =======================
+     Endpoint Header
+======================= */
+
+.endpoint-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+/* =======================
+     Method Badge
+======================= */
+
+.method{
+
+    color:white;
+
+    font-weight:bold;
+
+    padding:8px 18px;
+
+    border-radius:7px;
+
+    font-size:13px;
+
+}
+
+.get{
+
+    background:#16a34a;
+
+}
+
+.post{
+
+    background:#2563eb;
+
+}
+
+.put{
+
+    background:#ea580c;
+
+}
+
+.delete{
+
+    background:#dc2626;
+
+}
+
+
+
+/* =======================
+       Code Tabs
+======================= */
+
+.tabs{
+
+    display:flex;
+
+    gap:12px;
+
+    margin:25px 0;
+
+    flex-wrap:wrap;
+
+}
+
+.tabs button{
+
+    border:none;
+
+    outline:none;
+
+    background:#1f2937;
+
+    color:#cbd5e1;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-weight:600;
+
+}
+
+.tabs button:hover{
+
+    background:#334155;
+
+}
+
+.tabs .active{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+
+
+/* =======================
+      Headings
+======================= */
+
+h4{
+
+    margin-top:25px;
+
+    margin-bottom:10px;
+
+    color:#f8fafc;
+
+}
+
+
+
+/* =======================
+      Link Cards
+======================= */
+
+.link-box{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#1e293b;
+
+    border-radius:10px;
+
+}
+
+
+
+/* =======================
+      CodeBlock Styling
+======================= */
+
+pre{
+
+    white-space:pre-wrap;
+
+    overflow:auto;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
+
+
+
+/* =======================
+      Scrollbar
+======================= */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#334155;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#111827;
+
+}
+
+
+
+/* =======================
+      Responsive
+======================= */
+
+@media(max-width:900px){
+
+.documentation{
+
+    flex-direction:column;
+
+}
+
+.sidebar{
+
+    width:100%;
+
+    height:auto;
+
+    position:relative;
+
+    border-right:none;
+
+    border-bottom:1px solid #1f2937;
+
+}
+
+.content{
+
+    padding:25px;
+
+}
+
+.content h1{
+
+    font-size:34px;
+
+}
+
+.endpoint-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.tabs{
+
+    flex-direction:column;
+
+}
+
+.tabs button{
+
+    width:100%;
+
+}
+
+}

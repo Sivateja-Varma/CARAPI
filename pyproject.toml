@@ -7,12 +7,15 @@ requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.18.4",
     "bcrypt==4.0.1",
+    "fastapi-guard>=7.1.1",
     "fastapi[standard]>=0.135.3",
+    "logtail-python>=0.3.4",
     "passlib[bcrypt]>=1.7.4",
     "psycopg[binary]>=3.3.3",
     "pytest>=9.0.3",
     "python-dotenv>=1.2.2",
     "python-jose>=3.5.0",
+    "slowapi>=0.1.10",
     "sqlmodel>=0.0.38",
     "uvicorn>=0.44.0",
 ]

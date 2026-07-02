@@ -36,7 +36,6 @@ limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(
     title="CarMart API",
     description="""
-# CarMart REST API
 
 A REST API for managing cars with authentication.
 
@@ -176,10 +175,19 @@ T=TypeVar("T")
 class ResponseObj(BaseModel,Generic[T]):
    data:T
 
-@app.get("/",status_code=status.HTTP_200_OK,tags=['GET DATA'],summary='GET ALL THE DATA THROUGH THIS ENDPOINT',description='GET ALL THE DATA OF CARS')
+@app.get("/",status_code=status.HTTP_200_OK,tags=['GET DATA'],summary='GET ALL THE DATA THROUGH THIS ENDPOINT',description='GET ALL THE DATA OF CARS, USE THE IMAGE URL FOR API CALLS TO GET THE IMAGES')
 async def Home(session:SessionDep):
   cars = session.exec(select(Car)).all()
-  return cars
+  response=[]
+  for car in cars:
+     response.append({
+        "id":car.id,
+        "brand":car.brand,
+        "name":car.name,
+        "image_path":car.image_url,
+        "image_url":f"{os.getenv("ENTIRE_URL")}/{car.image_url}"
+     })
+  return response
 
 @app.get("/singleCar/{id}",status_code=status.HTTP_200_OK,tags=['GET DATA'],summary='SINGLE CAR INFO ENDPOINT',description='CAR IS GIVEN BASED ON ID IF NOT 404 IS RAISED ')
 async def singleCar(session:SessionDep,id:int):
@@ -197,7 +205,7 @@ async def CreateCar(session:SessionDep,brand:str=Form(...),name:str=Form(...),im
          file_path = os.path.join(UPLOAD_DIR, image.filename)
          with open(file_path,'wb') as f:
             f.write( await image.read())
-         image_url=f"{os.getenv("ENTIRE_URL")}/{file_path}"  
+         image_url=f"{file_path}"  
 
       car=Car(
          brand=brand,
@@ -220,16 +228,16 @@ async def UpdateCar(session:SessionDep,id:int,brand:Annotated[str|None,Form()]=N
    if name:  
       car.name=name
    if upload:
-      IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
-      print(IMAGE_URL)
-      print("I am here 2")
+      # IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
+      # print(IMAGE_URL)
+      # print("I am here 2")
       if os.path.exists(IMAGE_URL):
          print("i am here ")
          os.remove(IMAGE_URL)
       file_path = os.path.join(UPLOAD_DIR, upload.filename)
       with open(file_path,"wb") as f:
          f.write(await upload.read())  
-      car.image_url=f"{os.getenv("ENTIRE_URL")}/{file_path}"   
+      car.image_url=f"{file_path}"   
 
    try:
       session.add(car)
@@ -254,10 +262,10 @@ async def DeleteCar(session:SessionDep,id:int,user=Depends(Allowed([Roles.Admin]
       if IMAGE_URL:
          print(IMAGE_URL)
          try:
-            print("I am here")
-            IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
-            print(IMAGE_URL)
-            print("I am here 2")
+            # print("I am here")
+            # IMAGE_URL=IMAGE_URL.replace(os.getenv("ENTIRE_URL"),"")
+            # print(IMAGE_URL)
+            # print("I am here 2")
             if os.path.exists(IMAGE_URL):
                print("i am here ")
                os.remove(IMAGE_URL)

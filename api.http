@@ -1,0 +1,20 @@
+# POST http://127.0.0.1:8000/createCar
+# Content-Type: multipart/form-data; boundary=boundary123
+
+# --boundary123
+# Content-Disposition: form-data; name="brand"
+
+# newnew
+# --boundary123
+# Content-Disposition: form-data; name="name"
+
+# passnew
+# --boundary123
+# Content-Disposition: form-data; name="image"; filename="2002-Ferrari-Enzo-009-1536.jpg"
+# Content-Type: image/jpeg
+
+# < ./2002-Ferrari-Enzo-009-1536.jpg
+# --boundary123--
+
+
+GET http://127.0.0.1:8000/

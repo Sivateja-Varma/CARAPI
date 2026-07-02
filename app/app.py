@@ -65,7 +65,8 @@ Bearer YOUR_TOKEN
     contact={
         "name":"Sivateja Varma",
         "email":"example@gmail.com"
-    }
+    },
+root_path="/api"
 )
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)

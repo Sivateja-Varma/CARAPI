@@ -17,7 +17,7 @@ export default function HomePage() {
               Add Car
             </NavLink>
 
-            <NavLink to="http://32.236.44.143:8000/redoc" className="btn btn-outline-light px-4">API Docs</NavLink>
+            <NavLink to="http://32.236.44.143/redoc" className="btn btn-outline-light px-4">API Docs</NavLink>
 
             {token?<button className="btn btn-danger"
             onClick={()=>{setToken("")

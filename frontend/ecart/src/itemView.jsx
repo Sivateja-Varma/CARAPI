@@ -31,7 +31,7 @@ export default function ItemView() {
         <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3" key={item.id}>
           <div className="car-card">
             <div className="image-wrapper">
-              <img src={item.image_url} alt={item.name} />
+              <img src={item.image_path} alt={item.name} />
             </div>
 
             <div className="car-content">

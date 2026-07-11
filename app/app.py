@@ -49,6 +49,9 @@ A REST API for managing cars with authentication.
 - PostgreSQL
 - SQLModel
 
+## Usage
+for api usage always add "/api"
+
 ## Authentication
 
 Login first.
